@@ -4,7 +4,7 @@ A ruby library to manipulate Fortran namelists
 
 ## How to use
 
-``` ruby
+```ruby
   require './lib/nml'
   
   # parse an existing namelist
