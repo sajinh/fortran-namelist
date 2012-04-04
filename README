@@ -53,16 +53,19 @@ A ruby library to manipulate Fortran namelists
       nshare << share << {:a => 1}
 
   # Step 2 - Construct a new namelist
-    # Push namelist groups to NML_Writer using <<
-    NML_Writer << nshare << ngrid << ungrib << nmet
+    # Push namelist groups to NML_Writer using instance_method <<
+
+    nml_writer = NML_Writer.new
+
+    nml_writer << nshare << ngrid << ungrib << nmet
 
     # Write out to STDOUT
 
-    NML_Writer >> STDOUT
+    nml_writer >> STDOUT
    
     # Write to a file or other object supporting puts
     outfile = File.new("namelist.wps.asia","w")
-    NML_Writer >> outfile
+    nml_writer >> outfile
     outfile.close
 ```
 
