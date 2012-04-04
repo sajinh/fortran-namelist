@@ -14,7 +14,8 @@ A ruby library to manipulate Fortran namelists
   # as keys of the second level of hashes
   # namelist groups can be retrieved by
   # referencing these keys
-    # get namelist group 'share'
+    # get namelist group '&share'
+
    share = nml[:share]
 
    # the return value is of type NV, which is
@@ -27,20 +28,24 @@ A ruby library to manipulate Fortran namelists
    # keep(*args) returns a new NV object which
    # only contains the variables indicated through
    # args array
+
      share=share.keep(:wrf_core, :max_dom, :start_date)
 
    # del(*args) deletes specified variables of
    # a particular group
+
      share=share.del(:wrf_core, :max_dom)
 
    # After manipulating namelist groups, write them
    # to a new namelist
    # Step 1 -  Create a new Namelist Group
      # create a namelist group 'share'
+
        nshare = NML_Group.create(:share)
   
      # add group variables, these can be new hashes
      # or modified NV hashes from the previous manipulation
+
        nshare << share 
        nshare << {:a => 1} 
 
@@ -52,6 +57,7 @@ A ruby library to manipulate Fortran namelists
     NML_Writer << nshare << ngrid << ungrib << nmet
 
     # Write out to STDOUT
+
     NML_Writer >> STDOUT
    
     # Write to a file or other object supporting puts

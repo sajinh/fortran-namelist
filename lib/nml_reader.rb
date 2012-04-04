@@ -21,7 +21,7 @@ module NML_Reader
   end
 
   def self.process(nml,hash)
-    line = nml[lno].chomp
+    line = nml[lno].strip
     key = line[1..-1].to_sym
     hash[key] = NV.new
     loop do
