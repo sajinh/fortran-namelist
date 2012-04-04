@@ -13,23 +13,23 @@ end
 #  end
 #end
 
-module NML_Writer 
-   @@hash=NV[:nml, {}]
-  class << self
+class NML_Writer 
+  def initialize
+   @hash=NV[:nml, {}]
+  end
 
   def <<(args)
-    @@hash<<(args)
+    @hash<<(args)
   end
 
   def nml
     arr=[]
-    nml=@@hash[:nml]
+    nml=@hash[:nml]
     nml.keys.each do |k|
       arr<<"&#{k}"
        nml[k].each_pair do |ky,vl|
          if vl.is_a? Array
            if vl.any? {|w| w.is_a? String}
-             #vl="'#{vl.join(",")}'" 
              vl=vl.map {|w| "'#{w}'"}.join(",")
            else
              vl=vl.join(",") 
@@ -46,9 +46,7 @@ module NML_Writer
     arr[0..-2] # remove the last line space
   end
 
-
   def >>(args)
     args.puts nml
-  end
   end
 end

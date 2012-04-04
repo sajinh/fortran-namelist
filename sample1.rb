@@ -26,6 +26,7 @@ nmet = NML_Group.create(:metgrid)
 nmet << metgrid
 
 outfil = File.new("namelist.wps.asia","w")
-NML_Writer << nshare << ngrid << ungrb << nmet
-NML_Writer >> STDOUT
+nml_writer = NML_Writer.new
+nml_writer << nshare << ngrid << ungrb << nmet
+nml_writer >> STDOUT
 outfil.close

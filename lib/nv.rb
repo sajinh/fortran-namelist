@@ -24,7 +24,12 @@ class NV < Hash
     rescue
       abort mesg
     end
-    NV.new_from_pairs(keys,vals)
+    nhsh=NV.new_from_pairs(keys,vals)
+    nhsh
+  end
+
+  def keep!(*args)
+    nil
   end
 
   def self.new_from_pairs(keys,values)

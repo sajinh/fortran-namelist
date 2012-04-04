@@ -11,5 +11,6 @@ nml.delete(:bdy_control)
 nml.delete(:grib2)
 
 
-NML_Writer << nml
-NML_Writer >> STDOUT
+nml_writer = NML_Writer.new
+nml_writer << nml
+nml_writer >> STDOUT
