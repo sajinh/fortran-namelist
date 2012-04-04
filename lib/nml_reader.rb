@@ -11,7 +11,7 @@ module NML_Reader
     loop do 
       line=nml[lno]
       break if line.nil?
-      if line.match /^&\s*\w+/
+      if line.match /^\s*&\s*\w+/
         process(nml,hash) 
       else
         @ln+=1
@@ -27,9 +27,9 @@ module NML_Reader
     loop do
       @ln+=1
       line=nml[lno]
-      break if line=~/^\//
+      break if line=~/^\s*\//
       next_line=nml[lno+1]
-      if next_line and (not next_line.match /^\//)
+      if next_line and (not next_line.match /^\s*\//)
         if next_line.match /\s*\w+\s*=/
           key2,val2=process_oneliner(line)
         else
@@ -55,7 +55,7 @@ module NML_Reader
     next_line=nml[lno+1]
     arr=[]
     while !(nml[lno+1].match(/\s*\w+\s*=/))
-      break if line=~/^\//
+      break if line=~/^\s*\//
       break if line.nil?
       arr << line
       @ln+=1 
@@ -73,6 +73,7 @@ module NML_Reader
     val2=val2.chop if val2 =~ /,$/
     # to avoid interpreting .something as method
     return val=val2 if val2.match /\.\w+/ 
+    return val=val2 if val2.match /\w+\./ 
     return(eval("val = #{val2}")) 
   end
 end
