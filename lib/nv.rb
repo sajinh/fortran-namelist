@@ -1,6 +1,6 @@
 class NV < Hash
   def <<(args)
-    self[self.keys.first].merge! (args)
+    self[self.keys.first].merge!(args)
     self
   end
 
