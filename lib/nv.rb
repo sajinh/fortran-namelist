@@ -25,12 +25,10 @@ class NV < Hash
       abort mesg
     end
     nhsh=NV.new_from_pairs(keys,vals)
-    nhsh
+    self.keys.each {|k| self.delete(k)}
+    self.merge!(nhsh)
   end
 
-  def keep!(*args)
-    nil
-  end
 
   def self.new_from_pairs(keys,values)
     hash = NV.new

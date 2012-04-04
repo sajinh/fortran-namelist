@@ -3,6 +3,7 @@ require './lib/nml'
 nml_file = "./namelists/namelist.input"
 nml = NML_Reader.read(nml_file)
 nml[:time_control].del :run_days
+nml[:time_control].keep :run_hours
 nml.delete(:domains)
 nml.delete(:physics)
 nml.delete(:fdda)

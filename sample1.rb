@@ -3,7 +3,7 @@ require './lib/nml'
 nml_file = "./namelists/namelist.wps.all_options"
 nml = NML_Reader.read(nml_file)
 
-share=nml[:share].keep :wrf_core, 
+nml[:share].keep :wrf_core, 
            :max_dom,
            :start_date,
            :end_date,
@@ -17,7 +17,7 @@ metgrid=nml[:metgrid].del(:process_only_bdy,:constants_name,
               :opt_output_from_metgrid_path)
 
 nshare = NML_Group.create(:share)
-nshare << share << {:a => 1}
+nshare << nml[:share] << {:a => 1}
 ngrid = NML_Group.create(:geogrid)
 ngrid << geogrid
 ungrb = NML_Group.create(:ungrib)
