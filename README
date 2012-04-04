@@ -1,0 +1,65 @@
+## What is this?
+
+A ruby library to manipulate Fortran namelists
+
+## How to use
+
+``` ruby
+  require './lib/nml'
+  
+  # parse an existing namelist
+  nml = NML_Reader.read(nml_file)
+
+  # returns a hash of hashes with group names
+  # as keys of the second level of hashes
+  # namelist groups can be retrieved by
+  # referencing these keys
+    # get namelist group 'share'
+   share = nml[:share]
+
+   # the return value is of type NV, which is
+   # a Hash extended with the methods <<, del
+   # and keep
+
+   # <<(args) merges args with the first key
+   # of the reciever hash
+
+   # keep(*args) returns a new NV object which
+   # only contains the variables indicated through
+   # args array
+     share=share.keep(:wrf_core, :max_dom, :start_date)
+
+   # del(*args) deletes specified variables of
+   # a particular group
+     share=share.del(:wrf_core, :max_dom)
+
+   # After manipulating namelist groups, write them
+   # to a new namelist
+   # Step 1 -  Create a new Namelist Group
+     # create a namelist group 'share'
+       nshare = NML_Group.create(:share)
+  
+     # add group variables, these can be new hashes
+     # or modified NV hashes from the previous manipulation
+       nshare << share 
+       nshare << {:a => 1} 
+
+    # << operations can be nested
+      nshare << share << {:a => 1}
+
+  # Step 2 - Construct a new namelist
+    # Push namelist groups to NML_Writer using <<
+    NML_Writer << nshare << ngrid << ungrib << nmet
+
+    # Write out to STDOUT
+    NML_Writer >> STDOUT
+   
+    # Write to a file or other object supporting puts
+    outfile = File.new("namelist.wps.asia","w")
+    NML_Writer >> outfile
+    outfile.close
+```
+
+Enjoy!
+
+Copyright Saji Hameed (2012)  saji.uaizu@gmail.com
