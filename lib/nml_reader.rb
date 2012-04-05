@@ -4,9 +4,14 @@ module NML_Reader
     @ln
   end
 
+  def self.okeys
+    @okeys
+  end
+
   def self.read(file)
     nml=IO.readlines(file)
     hash={}
+    @okeys=[]
     @ln=0
     loop do 
       line=nml[lno]
@@ -17,12 +22,14 @@ module NML_Reader
         @ln+=1
       end
     end
+    hash[:okeys]=okeys
     hash
   end
 
   def self.process(nml,hash)
     line = nml[lno].strip
     key = line[1..-1].to_sym
+    @okeys << key
     hash[key] = NV.new
     loop do
       @ln+=1

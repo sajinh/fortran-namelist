@@ -1,7 +1,9 @@
 require './lib/nml'
+require 'pp'
 
 nml_file = "./namelists/namelist.wps.all_options"
 nml = NML_Reader.read(nml_file)
+okeys= nml[:okeys]
 
 nml[:share].keep :wrf_core, 
            :max_dom,
@@ -27,6 +29,10 @@ nmet << metgrid
 
 outfil = File.new("namelist.wps.asia","w")
 nml_writer = NML_Writer.new
+
+# Order the groups in the order indicated by okeys
+nml_writer.okeys = [:geogrid, :ungrib, :metgrid, :share]
 nml_writer << nshare << ngrid << ungrb << nmet
+
 nml_writer >> STDOUT
 outfil.close

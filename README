@@ -59,6 +59,18 @@ A ruby library to manipulate Fortran namelists
 
     nml_writer << nshare << ngrid << ungrib << nmet
 
+    # optionally re-order group names by passing in
+    # an array of keys in desired order
+
+       # example retrieves group names from original
+       # namelist and reverses the order
+       # make sure all group names are included in
+       # the array; otherwise it won't sort the output
+
+        nml_writer.okeys=nml[:okeys].reverse # reverse the
+                                             # order of group
+                                             # names in output
+
     # Write out to STDOUT
 
     nml_writer >> STDOUT
