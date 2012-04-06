@@ -62,16 +62,18 @@ module NML_Reader
     next_line=nml[lno+1]
     arr=[]
     while !(nml[lno+1].match(/\s*\w+\s*=/))
-      break if line=~/^\s*\//
+      if line=~/^\s*\//
+        @ln-=1
+        break
+      end
       break if line.nil?
-      arr << line
+      arr << line.strip
       @ln+=1 
       line=nml[lno]
     end
     line=arr.join
     key2,val2 = line.split("=")
     val2=process_value(val2)
-    @ln-=1
     return [key2,val2]
   end
   
